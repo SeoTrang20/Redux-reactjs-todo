@@ -11,7 +11,7 @@
 
 // store.js
 import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from '../reducers'; // Thay thế 'reducers' bằng đường dẫn tới reducers của bạn
+import rootReducer from '../reducers/rootReducer'; // Thay thế 'reducers' bằng đường dẫn tới reducers của bạn
 
 const store = configureStore({
   reducer: rootReducer,

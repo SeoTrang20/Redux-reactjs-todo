@@ -2,7 +2,6 @@
 const initialState = {
     todos: [],
     loading: false, // Trạng thái loading mặc định là false
-    language: 'en',
   };
   
   const todoReducer = (state = initialState, action) => {

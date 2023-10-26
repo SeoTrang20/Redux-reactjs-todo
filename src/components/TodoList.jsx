@@ -1,18 +1,28 @@
 // src/components/TodoList.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, deleteTodo, toggleTodo } from '../actions';
+import { useTranslation } from 'react-i18next';
+
+import { addTodo, changeLg, deleteTodo, toggleTodo } from '../actions';
 
 const TodoList = () => {
+
+  const { t , i18n} = useTranslation()
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+  
   const [newTodo, setNewTodo] = useState('');
-  const todos = useSelector((state) => state.todos);
-  const loading = useSelector((state) => state.loading);
+  const todos = useSelector((state) => state.todo.todos);
+  const loading = useSelector((state) => state.todo.loading);
+  const language = useSelector((state) => state.language.language);
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    console.log(todos);
+    console.log("todos :",todos);
     console.log('loading : ',loading);
-  },[todos])
+    console.log('language : ',language);
+  },[todos,language])
 
   const handleAddTodo = () => {
     if (newTodo) {
@@ -21,9 +31,56 @@ const TodoList = () => {
     }
   };
 
+  
+
+  const lg = {
+    title:{
+      en:'Todo List',
+      vn:'Quản lí công việc'
+    },
+    btnAdd:{
+      en:'Add Todo',
+      vn:'Thêm công việc'
+    },
+    btnToggle:{
+      en:'Toggle',
+      vn:'Chuyển đổi'
+    },
+    btnDelete:{
+      en:'Delete',
+      vn:'Xóa'
+    },
+    btnChangeLanguage:{
+      en:'Change Language',
+      vn:'Thay Đổi Ngôn Ngữ'
+    }
+  }
+
+  console.log(lg.title[language]);
+  // console.log(lg.title+'.'+ language);
+
+  const handleChangeLanguage = () => {
+    dispatch(changeLg());
+  }
+
   return (
     <div>
-      <h1>Todo List</h1>
+      <button onClick={() => changeLanguage('vn')}>Viet nam</button>
+      <button onClick={() => changeLanguage('en')}>English</button>
+      <h2>test </h2>
+      <h5 class="card-title">{t('content.functional')}</h5>
+      <h1>
+        {
+          lg.title[language]
+        }
+      </h1>
+      <button
+        onClick={handleChangeLanguage}
+      >
+        {
+          lg.btnChangeLanguage[language]
+        }
+      </button>
       <div>
         <input
           type="text"
